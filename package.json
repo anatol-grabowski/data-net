@@ -1,0 +1,38 @@
+{
+  "name": "data-net",
+  "version": "2.0.4",
+  "description": "Serializable (JSON.stringifiable) graph data structure (nodes connected by edges)",
+  "main": "data-net.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "readme": "README.md",
+	"bugs": {
+    "url": "https://github.com/grabantot/data-net/issues"
+  },
+	"homepage": "https://github.com/grabantot/data-net#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grabantot/data-net.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "net",
+    "datanet",
+    "data",
+    "structure",
+    "node",
+		"edge",
+    "connection",
+    "link",
+    "json",
+    "serializable",
+    "graph"
+  ],
+  "author": "grabantot",
+  "license": "MIT"
+}
