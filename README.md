@@ -1,5 +1,5 @@
 # data-net
-Serializable (JSON.stringifiable) directed/undirected graph (datanet).
+Serializable (JSON.stringifiable) graph (nodes connected by edges).
 Multiple connections between the same nodes are possible.
 Wether graph is directed or not depends on how you treat edges.
 
@@ -8,13 +8,15 @@ Wether graph is directed or not depends on how you treat edges.
 Graph {
   lastId: number //counter for assigning unique ids to nodes and edges
   nodes: Node[] //dense array of nodes
+  edges: Edges[] //edges getter!
   
   new Graph([jsonGraph: JsonGraph||string]): Graph
   node(data: any): Node //creates new node
   edge(from: Node, to: Node): Edge //creates an edge between two nodes
-	nodeFromJSON(jsonNode: JsonNode): Node //node from json, overwrites if exist, keeps edges
-	edgeFromJSON(jsonEdge: JsonEdge): Edge //edge from json, overwrites if exist
-	getNode(id: number): Node //finds node by id
+  nodeFromJSON(jsonNode: JsonNode): Node //node from json, overwrites if exist, keeps edges
+  edgeFromJSON(jsonEdge: JsonEdge): Edge //edge from json, overwrites if exist
+  getNode(id: number||Node): Node //finds node by id
+  getEdge(id: number||Edge): Node //finds node by id
   nextId(): number //generates new id (essentialy lastId++)
   toJSON(): JsonGraph //simple representaton of the graph without recursive properties
   fromJSON(jsonGraph: JsonGraph||string): this
@@ -31,13 +33,10 @@ Node {
   remove(): undefined //removes node from graph.nodes and all edges from connected nodes
   from(fromNode: Node): Edge //shortcut for faster edges creating
   to(toNode: Node): Edge //shortcut for faster edges creating
-	getEdge(id: number): Edge //finds edge by id
-  fromsToJSON(): JsonEdge[] //provides serialization of outgoing edges
+  getEdge(id: number): Edge //finds edge by id
   toJSON(): JsonNode //skips graph and edges properties
   fromJSON(jsonNode: JsonNode||string): this
-	//creation of nodes through constructor is not recommended use graph.node() instead
-  new Node([data: any, graph: Graph]): Node //adds node to graph.nodes
-  new Node(graph: Graph): Node //sets NOTHING but graph property of the node
+  new Node([data: any]): Node //adds node to graph.nodes
 }
 ```
 
@@ -50,19 +49,19 @@ Edge {
 
   remove(): undefined //removes edge from from.edges and to.edges
   toJSON(): JsonEdge //replaces from and to with from.id and to.id, skips graph property
-  fromJSON(jsonEdge: JsonEdge||string): this
-	//creation of edges through constructor is not recommended use graph.edge() instead
+  fromJSON(jsonEdge: JsonEdge||string, nodes: Nodes[]): this
+  //creation of edges through constructor is not recommended use graph.edge() instead
   new Edge([from: Node, to: Node, graph: Graph]): Edge //adds edge to from-, to.edges
-  new Edge(graph: Graph): Edge //sets NOTHING but graph property of the edge
 }
 ```
-See more concise summary of all methods on top of the source file.
+See more concise summary of all methods at the top of the source file.
 
 ## Examples
 ### Graph serialization/deserialization
 This example creates a "triangular" graph (3 nodes, 3 edges).
 ```
   const Graph = require('data-net')
+
   let g = new Graph()
   let n1 = g.node('node1') //string as data
   let n2 = g.node({name: 'John', age: 24}) //object as data
@@ -85,7 +84,7 @@ This example creates a "triangular" graph (3 nodes, 3 edges).
    {"to":1,"from":0,"id":2},
    {"to":3,"from":1,"id":4,"weight":2},
    {"to":0,"from":3,"id":5}],
- 	"lastId":5,
+   "lastId":5,
   "name":"sample graph"}'*/
 
   //deserialize
