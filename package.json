@@ -1,34 +1,9 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "data-net",
-        "scope": null,
-        "escapedName": "data-net",
-        "name": "data-net",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "d:\\Grabowski\\_3_PROJECTS"
-    ]
-  ],
   "_from": "data-net",
-  "_id": "data-net@2.1.1",
+  "_id": "data-net@4.0.2",
   "_inBundle": false,
-  "_inCache": true,
-  "_integrity": "sha512-4llMSg/RLENsuufdCSSGgsR7oWEfQ/l6FHucZ3s8i3X8/KxT0EXD81OFyQxqIJAaE5NEXmXgXDiB6qJlOTzT5Q==",
+  "_integrity": "sha512-ni6NXQQKrMp4s4jHDVJx7XrBbgLdiOM0NaPjzOjySs7Fx5++J0UFFvOEu11sr/RM1cJFV+XJ9XXnU5Y4VLDY5A==",
   "_location": "/data-net",
-  "_nodeVersion": "7.6.0",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/data-net-2.0.5.tgz_1495092711843_0.2806581538170576"
-  },
-  "_npmUser": {
-    "name": "grabantot",
-    "email": "grabantot@gmail.com"
-  },
-  "_npmVersion": "3.10.9",
   "_phantomChildren": {},
   "_requested": {
     "type": "tag",
@@ -44,22 +19,25 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/data-net/-/data-net-2.1.1.tgz",
-  "_shasum": "2d8c3c6b50c44d1b7ea4090beebc6f71d3a7ada3",
-  "_shrinkwrap": null,
+  "_resolved": "https://registry.npmjs.org/data-net/-/data-net-4.0.2.tgz",
+  "_shasum": "10c5e273aad7cd551c63fb35727de7d387425ac0",
   "_spec": "data-net",
-  "_where": "d:\\Grabowski\\_TEMP\\fhe\\_3_PROJECTS",
+  "_where": "/_tot/_tot/_3_PROJECTS/js",
   "author": {
     "name": "grabantot"
   },
   "bugs": {
     "url": "https://github.com/grabantot/data-net/issues"
   },
-  "bundleDependencies": false,
-  "dependencies": {},
+  "bundleDependencies": [],
+  "dependencies": {
+    "crypto-random-string": "^1.0.0"
+  },
   "deprecated": false,
   "description": "Serializable (JSON.stringifiable) graph data structure (nodes connected by edges)",
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2"
+  },
   "directories": {
     "test": "test"
   },
@@ -82,7 +60,7 @@
     "graph"
   ],
   "license": "MIT",
-  "main": "data-net.js",
+  "main": "index.js",
   "maintainers": [
     {
       "name": "grabantot",
@@ -96,8 +74,9 @@
     "url": "git+https://github.com/grabantot/data-net.git"
   },
   "scripts": {
-    "prepublish": "npm test",
+    "cover": "nyc mocha; nyc report --reporter=html",
+    "prepublish": "npm run cover",
     "test": "mocha"
   },
-  "version": "2.1.1"
+  "version": "4.0.2"
 }
