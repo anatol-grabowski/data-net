@@ -36,7 +36,9 @@
   "deprecated": false,
   "description": "Serializable (JSON.stringifiable) graph data structure (nodes connected by edges)",
   "devDependencies": {
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "mocha": "^5.1.0",
+    "nyc": "^11.6.0"
   },
   "directories": {
     "test": "test"
