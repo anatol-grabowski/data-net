@@ -30,8 +30,7 @@
     "url": "https://github.com/grabantot/data-net/issues"
   },
   "bundleDependencies": [],
-  "dependencies": {
-  },
+  "dependencies": {},
   "deprecated": false,
   "description": "Serializable (JSON.stringifiable) graph data structure (nodes connected by edges)",
   "devDependencies": {
@@ -79,5 +78,5 @@
     "prepublish": "npm run cover",
     "test": "mocha"
   },
-  "version": "4.0.2"
+  "version": "4.0.3"
 }
