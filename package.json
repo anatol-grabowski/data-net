@@ -31,7 +31,6 @@
   },
   "bundleDependencies": [],
   "dependencies": {
-    "crypto-random-string": "^1.0.0"
   },
   "deprecated": false,
   "description": "Serializable (JSON.stringifiable) graph data structure (nodes connected by edges)",
