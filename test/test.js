@@ -47,10 +47,20 @@ describe('toJSON', () => {
     let e1 = gr.edge(n1, n2, 'e1')
     let e2 = gr.edge(n2, n3, 'e2')
     let grj = gr.toJSON()
-    expect(grj.length).to.equal(gr.nodes.length + gr.edges.length)
+    expect(grj.nodes.length).to.equal(gr.nodes.length)
+    expect(grj.edges.length).to.equal(gr.edges.length)
 
     let gr2 = Graph.create(JSON.stringify(gr))
     expect(gr2.nodes.length).to.equal(gr.nodes.length)
     expect(gr2.edges.length).to.equal(gr.edges.length)
+
+    gr2.nodes.forEach(node => {
+      const originalNode = gr.nodes.find(n => n.id === node.id)
+      expect(node.data).to.deep.equal(originalNode.data)
+    })
+    gr2.edges.forEach(edge => {
+      const originalEdge = gr.edges.find(e => e.id === edge.id)
+      expect(edge.data).to.deep.equal(originalEdge.data)
+    })
   })
 })
