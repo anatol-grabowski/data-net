@@ -63,4 +63,24 @@ describe('toJSON', () => {
       expect(edge.data).to.deep.equal(originalEdge.data)
     })
   })
+
+  it('nodeFromJSON', () => {
+    const gr = Graph.create()
+    const n = gr.node('data')
+    n.remove()
+    const json = n.toJSON()
+    expect(gr.nodes.length).to.equal(0)
+    expect(() => gr.nodeFromJSON(json)).to.throw(Error)
+  })
+
+  it('edgeFromJSON', () => {
+    const gr = Graph.create()
+    const n1 = gr.node()
+    const n2 = gr.node()
+    const e = gr.edge(n1, n2)
+    e.remove()
+    const json = e.toJSON()
+    expect(gr.edges.length).to.equal(0)
+    expect(() => gr.edgeFromJSON(json)).to.throw(Error)
+  })
 })
