@@ -19,64 +19,60 @@ describe('eventfull-graph', () => {
   })
   describe('Graph', () => {
     describe('tryAddNode', () => {
-      it('should create and emit pending node', (done) => {
-        let evtNode
+      it('should create, return and emit pending node', () => {
+        let event
         g.events.on(EVENT_TRY_NODE_ADD, evt => {
-          evtNode = evt.node
-          done()
+          event = evt
         })
         const n = g.tryAddNode('n try data')
+        expect(n).to.equal(event.node)
         expect(n.pending).to.be.true
-        expect(n).to.equal(evtNode)
       })
     })
     describe('forcedNode', () => {
-      it('shoud create and emit node if node does not exist', (done) => {
-        let evtNode
+      it('shoud create, return and emit node if node does not exist', () => {
+        let event
         g.events.on(EVENT_NODE_ADD, evt => {
-          evtNode = evt.node
-          done()
+          event = evt
         })
         const json = {id: '123', data: 'n forced data'}
         expect(g.getNodeById(json.id)).to.equal(undefined)
         const n = g.forcedNode(json) //shouldn't be able to pass a string??
+        expect(n).to.equal(event.node)
         expect(n.pending).to.be.false
         expect(n.removed).to.be.false
         expect(n.data).to.equal(json.data)
-        expect(n).to.equal(evtNode)
       })
-      it('shoud update and emit node and unpend and unremove it if node exists', (done) => {
+      it('shoud update, return and emit node and unpend and unremove it if node exists', () => {
         const nExisting = g.nodes[1]
         nExisting.pending = true
         nExisting.removed = true
-        let evtNode
+        let event
         g.events.on(EVENT_NODE_UPDATE, evt => {
-          evtNode = evt.node
-          done()
+          event = evt
         })
         const json = {id: nExisting.id, data: 'n forced data'}
         expect(g.getNodeById(json.id)).to.equal(nExisting)
         const n = g.forcedNode(json)
+        expect(n).to.equal(event.node)
+        expect(n).to.equal(nExisting)
         expect(n.pending).to.be.false
         expect(n.removed).to.be.false
         expect(n.data).to.equal(json.data)
-        expect(n).to.equal(evtNode)
-        expect(n).to.equal(nExisting)
       })
-      it('shoud remove and emit node and unpend it if node exists and json has "removed: true"', (done) => {
+      it('shoud remove, return and emit node and unpend it if node exists and json has "removed: true"', () => {
         const nExisting = g.nodes[1]
         nExisting.pending = true
-        let evtNode
+        let event
         g.events.on(EVENT_NODE_REMOVE, evt => {
-          evtNode = evt.node
-          done()
+          event = evt
         })
         const json = {id: nExisting.id, removed: true}
         expect(g.getNodeById(json.id)).to.equal(nExisting)
         const n = g.forcedNode(json)
         expect(n.pending).to.be.false
         expect(n.removed).to.be.true
-        expect(n).to.equal(evtNode)
+        expect(n).to.equal(event.node)
         expect(n).to.equal(nExisting)
       })
       it('shoud return null if node does not exists and json has "removed: true"', () => {
@@ -87,33 +83,45 @@ describe('eventfull-graph', () => {
       })
     })
     describe('validatedNode', () => {
-      it('shoud create and emit node if node does not exist', (done) => {
-        let evtNode
+      it('shoud create and emit node if node does not exist and no hash provided', () => {
+        let event
         g.events.on(EVENT_NODE_ADD, evt => {
-          evtNode = evt.node
-          done()
+          event = evt
         })
         const json = {id: '123', data: 'n validated data'}
         expect(g.getNodeById(json.id)).to.equal(undefined)
         const n = g.validatedNode(json)
+        expect(n).to.equal(event.node)
         expect(n.pending).to.be.false
         expect(n.removed).to.be.false
         expect(n.data).to.equal(json.data)
-        expect(n).to.equal(evtNode)
       })
-      it('shoud return existing node if node exists', () => {
-        // let evtNode
-        // g.events.on(EVENT_NODE_ADD, evt => {
-        //   evtNode = evt.node
-        //   done()
-        // })
-        // const json = {id: '123', data: 'n validated data'}
-        // expect(g.getNodeById(json.id)).to.equal(undefined)
-        // const n = g.validatedNode(json)
-        // expect(n.pending).to.be.false
-        // expect(n.removed).to.be.false
-        // expect(n.data).to.equal(json.data)
-        // expect(n).to.equal(evtNode)
+      it('shoud return existing node if node exists and no hash provided', () => {
+        g.events.on(EVENT_NODE_ADD, evt => {
+          throw new Error('should not emit the event')
+        })
+        const nExisting = g.nodes[1]
+        const nExistingData = nExisting.data
+        const json = {id: nExisting.id, data: 'n validated data'}
+        expect(g.getNodeById(json.id)).to.equal(nExisting)
+        expect(json.data).to.not.equal(nExisting.data)
+        const n = g.validatedNode(json)
+        expect(n).to.equal(nExisting)
+        expect(n.data).to.equal(nExistingData)
+      })
+      it('shoud update, return and emit node if node exists and the right hash provided', () => {
+        let event
+        g.events.on(EVENT_NODE_UPDATE, evt => {
+          event = evt
+        })
+        const nExisting = g.nodes[1]
+        const json = {id: nExisting.id, data: 'n validated data'}
+        expect(g.getNodeById(json.id)).to.equal(nExisting)
+        expect(json.data).to.not.equal(nExisting.data)
+        const n = g.validatedNode(json, g.getHash(nExisting))
+        expect(n).to.equal(nExisting)
+        expect(n).to.equal(event.node)
+        expect(n.data).to.equal(json.data)
       })
     })
   })
