@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  checkout:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/data-net
+    steps:
+      - checkout
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - "~/data-net"
+      - run: ls -la
+      - run: echo $TEST_ENV_VAR
+      - run: echo $FILE_IN_ENV_VAR
+      - run: node -e "const encoded = process.env['FILE_IN_ENV_VAR']; const decoded = Buffer.from(encoded, 'base64').toString(); console.log(decoded);"
+
+workflows:
+  version: 2
+  development:
+    jobs:
+      - checkout:
+          context: test-context
