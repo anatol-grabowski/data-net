@@ -4,16 +4,18 @@ Multiple connections between the same nodes are possible.
 
 ### Graph is a set of Nodes connected by Edges:
 ```
-Graph              Node              Edge
- .nodes[]           .data             .data
- .get edges[]       .edges[]          .from
-                                      .to
+  Graph                Node              Edge
+  .nodes[]             .data             .from
+  .get edges[]         .edges[]          .to
 
- .node()            .remove()         .remove()
- .edge()
+  .node()              .remove()         .remove()
+  .edge()
 
- .toJSON()          .toJSON()         .toJSON()
- .create(json)
+  .toJSON()            .toJSON()         .toJSON()
+  .create(json)
+
+  .fromJSON(json)      .id               .id
+                       .graph            .graph
 ```
 
 ## Examples
@@ -38,37 +40,41 @@ This example creates a "triangular" graph (3 nodes, 3 edges).
 
 console output:
 ```
-  [
-    {
-      "_id": "66f3452e34a80da7",
-      "data": "node1 data"
-    },
-    {
-      "_id": "bb421ed09d99068e",
-      "data": {
-        "name": "John",
-        "age": 24
+  {
+    "nodes": [
+      {
+        "id": "7470b312c0465758",
+        "data": "node1 data"
+      },
+      {
+        "id": "4ba1066d42a36faf",
+        "data": {
+          "name": "John",
+          "age": 24
+        }
+      },
+      {
+        "id": "1fa26f86bb0bdbf1",
+        "data": 666
       }
-    },
-    {
-      "_id": "3074f15f83a4b019",
-      "data": 666
-    },
-    {
-      "_id": "6b463740721a51d8",
-      "from": "66f3452e34a80da7",
-      "to": "bb421ed09d99068e"
-    },
-    {
-      "_id": "5e5ae06231b6151f",
-      "from": "bb421ed09d99068e",
-      "to": "3074f15f83a4b019",
-      "data": "edge data"
-    },
-    {
-      "_id": "9d4d880938d4c5a2",
-      "from": "3074f15f83a4b019",
-      "to": "66f3452e34a80da7"
-    }
-  ]
+    ],
+    "edges": [
+      {
+        "id": "528fe27a0bd4908c",
+        "from": "7470b312c0465758",
+        "to": "4ba1066d42a36faf"
+      },
+      {
+        "id": "0e5a3c3d2d87f181",
+        "from": "4ba1066d42a36faf",
+        "to": "1fa26f86bb0bdbf1",
+        "data": "edge data"
+      },
+      {
+        "id": "43a07d31be3f2ca5",
+        "from": "1fa26f86bb0bdbf1",
+        "to": "7470b312c0465758"
+      }
+    ]
+  }
 ```
