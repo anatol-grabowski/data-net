@@ -1,28 +1,4 @@
 {
-  "_from": "data-net",
-  "_id": "data-net@4.0.2",
-  "_inBundle": false,
-  "_integrity": "sha512-ni6NXQQKrMp4s4jHDVJx7XrBbgLdiOM0NaPjzOjySs7Fx5++J0UFFvOEu11sr/RM1cJFV+XJ9XXnU5Y4VLDY5A==",
-  "_location": "/data-net",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "data-net",
-    "name": "data-net",
-    "escapedName": "data-net",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/data-net/-/data-net-4.0.2.tgz",
-  "_shasum": "10c5e273aad7cd551c63fb35727de7d387425ac0",
-  "_spec": "data-net",
-  "_where": "/_tot/_tot/_3_PROJECTS/js",
   "author": {
     "name": "grabantot"
   },
@@ -77,7 +53,8 @@
   "scripts": {
     "cover": "nyc mocha; nyc report --reporter=html",
     "prepublish": "npm run cover",
-    "test": "mocha"
+    "test": "mocha",
+    "example": "node ./scripts/example.js"
   },
   "version": "4.0.2"
 }
