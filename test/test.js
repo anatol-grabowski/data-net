@@ -1,9 +1,14 @@
 /* global describe, it */
 let chai = require('chai')
 let expect = chai.expect
-let { Graph } = require('..')
+let { createGraph } = require('..')
 
 describe('Graph creation', () => {
+  it.only('should create empty', () => {
+    const g = createGraph()
+    expext(g.nodes).to.be.an.empty.array()
+  })
+
   it('Graph created, nodes and edge added, node removed', () => {
     let gr = Graph.create()
     let n1 = gr.node('n1')
